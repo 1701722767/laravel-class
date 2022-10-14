@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class UserAccess
+class UserAccessPath
 {
     /**
      * Handle an incoming request.
@@ -21,9 +21,17 @@ class UserAccess
             return response()->json(['message' => 'you do not have permission to access for this page'], 401);
         }
 
-        error_log('usuario>' . $user);
-        error_log('id>' . $user->id);
-        return $next($request);
+        $originalPath = $request->path();
+        $pattern      = '/(\/)(\d+)(\/?)/';
+        $replacement  = '$1#$3';
+        $templatePath = preg_replace($pattern, $replacement, $originalPath);
 
+        $method  = $request->method();
+        $permits = $user->role->permissions()->where('method', $method)->where('url', $originalPath)->orWhere('url', $templatePath)->count();
+        if ($permits <= 0) {
+            return response()->json(['message' => 'you do not have permission to access for this page'], 401);
+        }
+
+        return $next($request);
     }
 }

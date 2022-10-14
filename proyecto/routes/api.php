@@ -49,7 +49,7 @@ Route::controller(ProfileController::class)->group(function () {
 
 Route::controller(UsersController::class)->group(function () {
     Route::get('users', 'index');
-    Route::get('users/{user}', 'show');
+    Route::get('users/{user}', 'show')->middleware('user-access-path');
     Route::delete('users/{user}', 'destroy');
     Route::post('users', 'store');
     Route::put('users/{user}', 'update');
