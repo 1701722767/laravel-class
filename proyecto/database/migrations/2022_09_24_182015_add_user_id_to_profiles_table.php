@@ -16,7 +16,7 @@ class AddUserIdToProfilesTable extends Migration
         Schema::table('profiles', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned()->after('url_facebook');
             $table->foreign('user_id')->references('id')
-                ->on('users');
+                ->on('users')->cascadeOnDelete();
         });
     }
 

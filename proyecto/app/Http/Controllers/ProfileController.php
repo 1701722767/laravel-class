@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -30,6 +31,8 @@ class ProfileController extends Controller
 
             return response()->json($profile, 201);
         } catch (\Throwable $th) {
+            Log::critical("store_profile_failed", ["error" => $th, "error_tracer" => $th->getTraceAsString()]);
+
             return response()->json(['message' => 'Internal Error'], 500);
         }
     }

@@ -40,7 +40,7 @@ Route::controller(RoleController::class)->group(function () {
 });
 
 Route::controller(ProfileController::class)->group(function () {
-    Route::get('profiles', 'index');
+    Route::get('profiles', 'index')->middleware('user-access');
     Route::get('profiles/{profile}', 'show');
     Route::delete('profiles/{profile}', 'destroy');
     Route::post('profiles', 'store');
@@ -48,11 +48,11 @@ Route::controller(ProfileController::class)->group(function () {
 });
 
 Route::controller(UsersController::class)->group(function () {
-    // Route::get('users', 'index');
-    // Route::get('users/{user}', 'show');
-    // Route::delete('users/{user}', 'destroy');
+    Route::get('users', 'index');
+    Route::get('users/{user}', 'show');
+    Route::delete('users/{user}', 'destroy');
     Route::post('users', 'store');
-    // Route::put('users/{user}', 'update');
+    Route::put('users/{user}', 'update');
 });
 
 Route::controller(AuthController::class)->group(function () {
