@@ -37,6 +37,7 @@ Route::controller(RoleController::class)->group(function () {
     Route::delete('roles/{role}', 'destroy');
     Route::post('roles', 'store');
     Route::put('roles/{role}', 'update');
+    Route::post('roles/{role}/permissions/add', 'addPermissions');
 });
 
 Route::controller(ProfileController::class)->group(function () {

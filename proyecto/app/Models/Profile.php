@@ -13,6 +13,7 @@ class Profile extends Model
         'phone_number',
         'url_facebook',
         'user_id',
+        'image',
     ];
 
     public function user()

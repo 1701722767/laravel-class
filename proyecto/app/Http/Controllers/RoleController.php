@@ -31,7 +31,20 @@ class RoleController extends Controller
             $role->save();
 
             return response()->json($role, 201);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
+            return response()->json(['message' => 'Internal Error'], 500);
+        }
+    }
+
+    public function addPermissions(Role $role, Request $request)
+    {
+        try {
+
+            $role->permissions()->attach($request->permission_id);
+            $role->permissions;
+
+            return response()->json($role, 201);
+        } catch (\Throwable$th) {
             return response()->json(['message' => 'Internal Error'], 500);
         }
     }
@@ -42,7 +55,7 @@ class RoleController extends Controller
             $role->update($request->all());
 
             return response()->json($role, 200);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return response()->json(['message' => 'Internal Error'], 500);
         }
     }
@@ -53,7 +66,7 @@ class RoleController extends Controller
             $role->delete();
 
             return response()->json(null, 204);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return response()->json(['message' => 'Internal Error'], 500);
         }
     }
